@@ -1,0 +1,116 @@
+﻿<Window x:Class="doubleSerial_Connect.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="395.333" Width="709.999" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ControlTemplate x:Key="minerButtonTemplete" TargetType="{x:Type Button}">
+            <Grid Height="20">
+                <Rectangle Fill="#FFDDDDDD" HorizontalAlignment="Left" Height="Auto" Stroke="Black" Margin="0,0,0,0" RadiusX="5" RadiusY="22" Width="24" />
+                <Image Source="그림2.png" Height="15" Width="17"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="maxbuttontemplete" TargetType="{x:Type Button}">
+            <Grid Height="20">
+                <Rectangle Fill="#FFDDDDDD" HorizontalAlignment="Left" Height="Auto" Stroke="Black" Margin="0,0,0,0" RadiusX="5" RadiusY="22" Width="24" />
+                <Image Source="그림3.png" Height="15" Width="17"/>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid Margin="534,87,40,135">
+            <Button x:Name="Reset_Button" Content="Reset" HorizontalAlignment="Left" Margin="11,49,0,0" VerticalAlignment="Top" Width="101" Height="35" Click="Reset_Button_Click"/>
+            <Button x:Name="Connect_Button" Content="Connect" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="102" Height="35" Click="Connect_Button_Click"/>
+            <Button x:Name="Enable_Button" Content="Ready" HorizontalAlignment="Left" Margin="11,97,0,0" VerticalAlignment="Top" Width="101" Height="35" Click="Enable_Button_Click" Background="Red" Foreground="White"/>
+        </Grid>
+        <Image HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="225" Source="MUS_Logo.png" Stretch="Fill"/>
+        <Label Content="[Recived Data]" HorizontalAlignment="Left" Margin="15,75,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="RecivedData_TextBox" HorizontalAlignment="Left" Height="123" Margin="21,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270" TextChanged="RecivedData_TextBox_TextChanged" MouseDoubleClick="RecivedData_TextBox_MouseDoubleClick"/>
+        <Button Content="Exit" HorizontalAlignment="Left" Margin="454,35,0,0" VerticalAlignment="Top" Width="146" Height="35" Click="Button_Click" />
+        <GroupBox x:Name="TrigerCOM_groupbox" Header="Triger COM Setting" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="299,87,0,0" Height="68" Width="220">
+            <Grid Margin="0,10,0,5">
+                <ComboBox x:Name="port_combox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="77,5,0,0" SelectionChanged="port_combox_SelectionChanged"/>
+                <Label x:Name="PORTname_lable" Content="port name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,5,0,0"/>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="PulseCOM_groupbox" Header="Pulse COM Setting" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="299,161,0,0" Height="68" Width="220">
+            <Grid Margin="0,2,0,5">
+                <ComboBox x:Name="port_combox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="77,5,0,0" SelectionChanged="port_combox1_SelectionChanged"/>
+                <Label x:Name="PORTname_lable1" Content="port name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,5,0,0"/>
+
+            </Grid>
+        </GroupBox>
+        <StackPanel Margin="251,22,307,280" Orientation="Horizontal">
+            <Label x:Name="label4" Content="동작 시간:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+            <Label x:Name="label3" Content="0분 0초" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        </StackPanel>
+        <Canvas x:Name="Control_Grid" Margin="21,249,40,20" IsVisibleChanged="Control_Grid_IsVisibleChanged">
+            <GroupBox x:Name="First_sellect_GroupBox" Header="Board Sellect" HorizontalAlignment="Left" VerticalAlignment="Top" Height="65" Width="92" Canvas.Top="21" Visibility="Hidden">
+                <Grid>
+                    <CheckBox x:Name="Triger_CheckBox" Content="Set" HorizontalAlignment="Left" Margin="0,4,0,0" VerticalAlignment="Top" Checked="Triger_CheckBox_Checked" Unchecked="Triger_CheckBox_Unchecked"/>
+                    <CheckBox x:Name="Shot_CheckBox" Content="Shot" HorizontalAlignment="Left" Margin="0,25,0,0" VerticalAlignment="Top" Checked="Shot_CheckBox_Checked" Unchecked="Shot_CheckBox_Unchecked"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="Set_Sellect_GroupBox" Header="Mode sellect" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="98" Canvas.Top="21" Height="65" Visibility="Hidden">
+                <Grid Width="62" Margin="0,4,0,-4">
+                    <CheckBox x:Name="Costom_CheckBox" Content="Costom" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="Costom_CheckBox_Checked" Unchecked="Costom_CheckBox_Unchecked"/>
+                    <CheckBox x:Name="Preset_CheckBox" Content="Preset" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Checked="Preset_CheckBox_Checked" Unchecked="Preset_CheckBox_Unchecked"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="Preset_GroupBox" Header="Preset" HorizontalAlignment="Left" VerticalAlignment="Top" Height="78" Width="77" Canvas.Left="191" Canvas.Top="4" Visibility="Hidden">
+                <Grid Margin="0,0,0,0">
+                    <CheckBox x:Name="Quter_CheckBox" Content="25%" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="Quter_CheckBox_Checked"/>
+                    <CheckBox x:Name="Half_CheckBox" Content="50%" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Checked="Half_CheckBox_Checked"/>
+                    <CheckBox x:Name="Whole_CheckBox" Content="100%" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top" Checked="Whole_CheckBox_Checked"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="BurstCondition_GroupBox" Header="Brust Condition" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="380" Canvas.Left="191" Canvas.Top="2" IsEnabledChanged="BurstCondition_GroupBox_IsEnabledChanged" Visibility="Hidden">
+                <Grid>
+                    <Label Content="Times : " HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Duty : " HorizontalAlignment="Left" Margin="3,27,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="Duty_Max_Button" Content="max" HorizontalAlignment="Left" Margin="179,30,0,0" VerticalAlignment="Top" Background="White" BorderBrush="White" Click="Duty_Max_Button_Click"/>
+                    <Button x:Name="Duty_Min_Button" Content="min" HorizontalAlignment="Left" Margin="53,30,0,0" VerticalAlignment="Top" Background="White" BorderBrush="White" Click="Duty_Min_Button_Click"/>
+                    <Button x:Name="Times_Max_Button" Content="max" HorizontalAlignment="Left" Margin="179,3,0,0" VerticalAlignment="Top" Background="White" BorderBrush="White" Click="Times_Max_Button_Click"/>
+                    <Button x:Name="Times_Min_Button" Content="min" HorizontalAlignment="Left" Margin="53,5,0,0" VerticalAlignment="Top" Background="White" BorderBrush="White" Click="Times_Min_Button_Click"/>
+                    <Slider x:Name="Times_Value_Slider" HorizontalAlignment="Left" Margin="82,5,0,0" VerticalAlignment="Top" Width="97" ValueChanged="Times_Value_Slider_ValueChanged" IsSelectionRangeEnabled="True" Maximum="100" LargeChange="10"/>
+                    <Slider x:Name="Duty_Value_Slider" HorizontalAlignment="Left" Margin="82,0,0,28.6" VerticalAlignment="Bottom" Width="97" IsSelectionRangeEnabled="True" ValueChanged="Duty_Value_Slider_ValueChanged" Maximum="100" LargeChange="10"/>
+                    <Button x:Name="Times_miner_Button" Content="Button" HorizontalAlignment="Left" Margin="210,4,0,0" VerticalAlignment="Top" Width="24" Template="{DynamicResource minerButtonTemplete}" Click="Times_miner_Button_Click"/>
+                    <Button x:Name="Times_plus_Button" Content="Button" HorizontalAlignment="Left" Margin="287,4,0,0" VerticalAlignment="Top" Width="24" Template="{DynamicResource maxbuttontemplete}" Click="Times_plus_Button_Click"/>
+                    <TextBox x:Name="Times_Value_Textbox" HorizontalAlignment="Left" Height="16" Margin="238,5,0,0" TextWrapping="Wrap" Text="000" VerticalAlignment="Top" Width="27" BorderBrush="White"/>
+                    <Label Content="회" HorizontalAlignment="Left" Margin="263,2,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="Duty_miner_Button" Content="Button" HorizontalAlignment="Left" Margin="210,30,0,0" VerticalAlignment="Top" Width="24" Template="{DynamicResource minerButtonTemplete}" Click="Duty_miner_Button_Click"/>
+                    <Button x:Name="Duty_plus_Button" Content="Button" HorizontalAlignment="Left" Margin="287,30,0,0" VerticalAlignment="Top" Width="24" Template="{DynamicResource maxbuttontemplete}" Click="Duty_plus_Button_Click"/>
+                    <TextBox x:Name="Duty_Value_Textbox" HorizontalAlignment="Left" Height="16" Margin="238,31,0,0" TextWrapping="Wrap" Text="000" VerticalAlignment="Top" Width="27" BorderBrush="White"/>
+                    <Label Content="%" HorizontalAlignment="Left" Margin="264,27,0,0" VerticalAlignment="Top" Height="25"/>
+                    <Button x:Name="Done_Button" Content="Done" HorizontalAlignment="Left" Margin="318,24,0,0" VerticalAlignment="Top" Width="45" Height="34" Click="Done_Button_Click"/>
+                    <Label Content="Freq : " HorizontalAlignment="Left" Margin="3,50,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="Freq_Min_Button" Content="min" HorizontalAlignment="Left" Margin="53,54,0,0" VerticalAlignment="Top" Background="White" BorderBrush="White" Click="Freq_Min_Button_Click"/>
+                    <Slider x:Name="Freq_Value_Slider" HorizontalAlignment="Left" Margin="82,57,0,0" Width="97" IsSelectionRangeEnabled="True" ValueChanged="Freq_Value_Slider_ValueChanged" Maximum="401" SmallChange="1" LargeChange="10" Height="18" VerticalAlignment="Top" MouseLeftButtonUp="Freq_Value_Slider_MouseLeftButtonUp" MouseLeftButtonDown="Freq_Value_Slider_MouseLeftButtonDown" PreviewMouseLeftButtonDown="Freq_Value_Slider_PreviewMouseLeftButtonDown"/>
+                    <Button x:Name="Freq_Max_Button" Content="max" HorizontalAlignment="Left" Margin="179,54,0,0" VerticalAlignment="Top" Background="White" BorderBrush="White" Click="Freq_Max_Button_Click"/>
+                    <Button x:Name="Freq_miner_Button" Content="Button" HorizontalAlignment="Left" Margin="210,54,0,0" VerticalAlignment="Top" Width="24" Template="{DynamicResource minerButtonTemplete}" Click="Freq_miner_Button_Click"/>
+                    <TextBox x:Name="Freq_Value_Textbox" HorizontalAlignment="Left" Margin="234,56,0,5.6" TextWrapping="Wrap" Text="0000" Width="33" BorderBrush="White"/>
+                    <Label Content="kHz" HorizontalAlignment="Left" Margin="260,53,0,0" VerticalAlignment="Top" Height="25"/>
+                    <Button x:Name="Freq_plus_Button" Content="Button" HorizontalAlignment="Left" Margin="288,54,0,0" VerticalAlignment="Top" Width="24" Template="{DynamicResource maxbuttontemplete}" Click="Freq_plus_Button_Click"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="TotalTime_GroupBox" Header="Total Time" HorizontalAlignment="Left" VerticalAlignment="Top" Height="73" Canvas.Left="515" Canvas.Top="21" Visibility="Hidden" Margin="0">
+                <Grid>
+                    <Label Content="총 조사 시간" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Content="딜레이 간격" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top" Width="78"/>
+                    <TextBox x:Name="TotalTime_TextBox" HorizontalAlignment="Left" Height="23" Margin="79,2,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="29" BorderBrush="White"/>
+                    <TextBox x:Name="Delay_TextBox" HorizontalAlignment="Left" Height="23" Margin="79,28,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="29" BorderBrush="White"/>
+                    <Label Content="분" HorizontalAlignment="Left" Margin="103,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="초" HorizontalAlignment="Left" Margin="103,25,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="Shot_GroupBox" Header="Shot" HorizontalAlignment="Left" VerticalAlignment="Top" Height="74" Canvas.Left="98" Canvas.Top="16" IsVisibleChanged="Shot_GroupBox_IsVisibleChanged" Visibility="Hidden">
+                <Grid Margin="0,2,0,-2">
+                    <Button x:Name="BrustShot_Button" Content="Burst Shot" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="BrustShot_Button_Click" Height="41" Margin="0,4,-1.4,0"/>
+                </Grid>
+            </GroupBox>
+        </Canvas>
+    </Grid>
+</Window>
